@@ -1,18 +1,24 @@
 import Link from 'next/link'
-import { signIn, signOut, useSession } from 'next-auth/client'
+import {providers,signIn, signOut, useSession } from 'next-auth/client'
 import styles from './header.module.css'
 
 // The approach used in this component shows how to built a sign in and sign out
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
-export default function Header () {
+export default function Header ({providers}) {
   const [ session, loading ] = useSession()
-  
+  console.log(session,'session')
+  console.log(providers)
   return (
     <header>
       <noscript>
         <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
       </noscript>
+      {/* {Object.values(providers).map(provider => (
+        <div key={provider.name}>
+          <button onClick={() => signIn(provider.id)}>Sign in with {provider.name}</button>
+        </div>
+      ))} */}
       <div className={styles.signedInStatus}>
         <p className={`nojs-show ${(!session && loading) ? styles.loading : styles.loaded}`}>
           {!session && <>
@@ -58,4 +64,9 @@ export default function Header () {
       </nav>
     </header>
   )
+}
+Header.getInitialProps = async () => {
+  return {
+    providers: await providers()
+  }
 }
