@@ -3,10 +3,20 @@ import Layout from '../components/layout'
 export default function Page () {
   return (
     <Layout>
-      <h1>NextAuth.js Example</h1>
-      <p>
-        This is an example site to demonstrate how to use <a href={`https://next-auth.js.org`}>NextAuth.js</a> for authentication.
-      </p>
+      <h1>
+        Quản lý tiền
+      </h1>
+      <ul>
+        <li><h3>
+          Tổng số tiền có trong mỗi tháng
+        </h3></li>
+        <li><h3>
+          danh sách chi tiêu
+        </h3></li>
+        <li><h3>
+          dự định sử dụng tiền với mục đích gì
+        </h3></li>
+      </ul>
     </Layout>
   )
 }

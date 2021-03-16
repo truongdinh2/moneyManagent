@@ -20,10 +20,14 @@
   ],
   "license": "ISC",
   "dependencies": {
+    "antd": "^4.14.0",
+    "i18next": "^19.9.2",
     "next": "^10.0.7",
     "next-auth": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-i18next": "^9.0.10",
+    "sqlite": "^4.0.19",
     "sqlite3": "^5.0.2"
   }
 }
