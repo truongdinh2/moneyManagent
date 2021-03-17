@@ -7,7 +7,8 @@ const { Option } = Select;
 
 const PriceInput = ({ value = {}, onChange }) => {
   const [number, setNumber] = useState(0);
-    const [currency, setCurrency] = useState('rmb');
+  const [numb, setNumb] = useState(0);
+    const [currency, setCurrency] = useState('dong');
     const triggerChange = (changedValue) => {
         onChange?.({
             number,
@@ -18,16 +19,17 @@ const PriceInput = ({ value = {}, onChange }) => {
     };
 
     const onNumberChange = (e) => {
-        const newNumber = numeral(e.target.value || '0', 10).format("0,0");
-        if (Number.isNaN(number)) {
-            return;
-        }
-        // (value)
-        // (newNumber, 'newnb')
-        if (!('number' in value)) {
-            ('ho')
-            setNumber(newNumber);
-        }
+        const newNumber = parseInt(e.target.value || '0', 10);
+        setNumb(e.target.value)
+        console.log(newNumber)
+        // if (Number.isNaN(number)) {
+        //     return;
+        // }
+        // // (value)
+        // // (newNumber, 'newnb')
+        // if (!('number' in value)) {
+        //     setNumber(newNumber);
+        // }
 
         triggerChange({
             number: newNumber,
@@ -43,12 +45,13 @@ const PriceInput = ({ value = {}, onChange }) => {
             currency: newCurrency,
         });
     };
-
     return (
         <span>
             <Input
                 type="text"
-                value={value.number || number}
+                value={numeral(numb).format("0,0")}
+                // value = {value.number}
+                // defaultValue={num1}
                 onChange={onNumberChange}
                 style={{
                     width: 100,
