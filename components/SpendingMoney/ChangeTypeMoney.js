@@ -1,5 +1,6 @@
-import { Input, Tooltip } from 'antd';
+import { Input, Tooltip, InputNumber } from 'antd';
 import React, { Component } from 'react';
+
 function formatNumber(value) {
     value += '';
     const list = value.split('.');
@@ -17,15 +18,16 @@ function formatNumber(value) {
 }
 
 class ChangeTypeMoney extends Component {
-    onChange = e => {
-        this.props.onChanges(e.target.value)
-        // console.log("ewwwwww",e);
-        // const { value } = e.target;
-        // const reg = /^-?\d*(\.\d*)?$/;
-        // if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
-        //      this.props.onChanges(value);
-        // }
-    };
+
+    // onChange = e => {
+    //     this.props.onChanges(e.target.value)
+    //     // console.log("ewwwwww",e);
+    //     // const { value } = e.target;
+    //     // const reg = /^-?\d*(\.\d*)?$/;
+    //     // if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
+    //     //      this.props.onChanges(value);
+    //     // }
+    // };
 
     // onBlur = () => {
     //     const { value, onBlur, onChanges } = this.props;
@@ -38,8 +40,17 @@ class ChangeTypeMoney extends Component {
     //         onBlur();
     //     }
     // };
-
+    handlePercentMatch = (e) => {
+        const isInteger = /^[0-9]+$/;
+        if (e.target.value === '' || isInteger.test(e.target.value)) {
+            this.props.onChanges(e.target.value)
+        }
+    }
+    handleTest = (e) => {
+        this.props.onChanges(e)
+    }
     render() {
+
         console.log(this.props, "data funtioon");
         const { value } = this.props;
         const title = value ? (
@@ -54,13 +65,22 @@ class ChangeTypeMoney extends Component {
                 placement="topLeft"
                 overlayClassName="numeric-input"
             >
-                <Input
+                {/*  <Input
                     {...this.props}
-                    onChange={this.onChange}
+                    onChange={this.handlePercentMatch}
                     // onBlur={this.onBlur}
                     placeholder="Input a number"
                     maxLength={25}
+
                     addonAfter="VND"
+                />
+              */}
+                <InputNumber
+                    {...this.props}
+                    formatter={value => `VND : ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                    onChange={this.handleTest}
+                   
                 />
             </Tooltip>
         );

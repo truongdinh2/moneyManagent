@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button } from 'antd';
 
-
+import styles from "./type.module.css";
 import CheckBoxInput from './CheckBoxInput';
 function SpendingMonney() {
 
@@ -12,15 +12,15 @@ function SpendingMonney() {
     const [listData, setListData] = useState([
         {
 
-            nameRequest: "31215536",
-            money: "6145643",
+            nameRequest: "Đổ xăng",
+            money:12000,
             disable: true
 
         },
         {
 
-            nameRequest: "31215536",
-            money: "56135145",
+            nameRequest: "Ăn trưa",
+            money: 5000,
             disable: true
         }
     ])
@@ -28,7 +28,7 @@ function SpendingMonney() {
         {
 
             nameRequest: "",
-            money: "",
+            money: 0,
             disable: false
         }
     ])
@@ -43,9 +43,12 @@ function SpendingMonney() {
     const handle = e => {
         setDatas(e.target.value)
     }
+  
     console.log(listData, "------------------------AAAAAAAAAAA");
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', marginTop: 30 }}>
+        <div className={styles.container}
+        // style={{ display: 'flex', flexDirection: 'column', marginTop: 30 }}
+        >
             {listData.map((item, key) => {
                 let items = { ...item, id: key }
                 return (

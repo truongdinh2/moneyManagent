@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
-import ChangeTypeMoney from './ChangeTypeMoney'
+import ChangeTypeMoney from './ChangeTypeMoney';
+import styles from './type.module.css'
 const formItemLayout = {
     labelCol: {
         span: 4,
@@ -24,17 +25,13 @@ const CheckBoxInput = props => {
     useEffect(() => {
         form.validateFields(['nickname']);
     }, [checkNick]);
-    // const onChange = () => {
-    //     setValue(!checkShowInput)
 
-    // };
 
     const onCheckboxChange = (e) => {
         setCheckNick(e.target.checked);
         setCheckShowInput(!checkShowInput)
 
     };
-
     const onCheck = async () => {
         try {
             const values = await form.validateFields();
@@ -50,10 +47,11 @@ const CheckBoxInput = props => {
     const handleChangeMoney = (e) => {
         handleStateOrder({ money: e })
     }
+
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Form form={form} name="dynamic_rule" style={{ display: 'flex', flexDirection: 'row' }}>
-                <Form.Item>
+                <Form.Item style={{ marginRight: 30 }}>
                     <Checkbox checked={checkNick} onChange={onCheckboxChange}>
 
                     </Checkbox>
@@ -68,12 +66,12 @@ const CheckBoxInput = props => {
                             message: 'Please input your nickname',
                         },
                     ]}
-                // shouldUpdate={(pre, cur) => pre.nickname !== cur.nickname }
+                //  shouldUpdate={(pre, cur) => pre.nickname !== cur.nickname }
                 >
-                    <Input disabled={disable} value={nameRequest} onChange={handleChangeType} />
+                    <Input className={styles.antInput} disabled={disable} value={nameRequest} onChange={handleChangeType} placeholder="nn" />
                 </Form.Item>
             </Form>
-            {(!checkShowInput) ? <ChangeTypeMoney style={{ width: 200, marginLeft: 15 }} value={money} onChanges={handleChangeMoney} /> : null}
+            {(!checkShowInput) ? <ChangeTypeMoney style={{ width: 300, marginLeft: 15, height: '50%' }} defaultValue={money} onChanges={handleChangeMoney} /> : null}
         </div>
     );
 };
