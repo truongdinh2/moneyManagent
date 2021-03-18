@@ -39,7 +39,6 @@ export default function Page(props) {
       }
     }
   }, [session?.user.name, user.name]);
-  console.log(data,'data da update ?')
   return (
     <Layout>
       <h1>
