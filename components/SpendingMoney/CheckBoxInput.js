@@ -25,8 +25,8 @@ const validateMessages = {
 };
 const CheckBoxInput = props => {
 
-    const { dataSucer, handleStateOrder } = props
-    const { nameRequest, money, disable, used } = dataSucer
+    const { dataSucer, handleStateOrder, handleDelete } = props
+    const { nameRequest, money, disable, used, id } = dataSucer
 
     const [form] = Form.useForm();
     const [checkNick, setCheckNick] = useState(false);
@@ -63,7 +63,9 @@ const CheckBoxInput = props => {
     const handleChangeMoney = (e) => {
         handleStateOrder({ money: e })
     }
-
+    const handleDeleteId = (id) => {
+        handleDelete(id)
+    }
     return (
         <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Form
@@ -90,7 +92,7 @@ const CheckBoxInput = props => {
                 {(checkShowInput) ?
                     <Form.Item
                         name="bi"
-                        label="Số bàn trống"
+                        
                         rules={[{ required: true }, { type: 'number', min: 0, max: 100000 }]}>
 
                         <InputNumber
@@ -107,9 +109,18 @@ const CheckBoxInput = props => {
 
 
                         />
+
                     </Form.Item>
                     : null
                 }
+                <Form.Item
+                    name="delete"
+                    label=""
+                   >
+
+                    <Button onClick={() => handleDeleteId(id)}>Delete</Button>
+                </Form.Item>
+
             </Form>
 
         </div>

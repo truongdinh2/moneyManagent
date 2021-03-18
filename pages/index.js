@@ -6,6 +6,7 @@ import Tutol from '../components/tutol'
 export default function Page(props) {
   const [session, loading] = useSession();
   const [data, setData] = useState(props.data);
+  const userName = session?.user.name;
   useEffect(() => {
     if (session) { setUser({ name: session.user.name, number: '20', }) }
     else { return; }
@@ -15,7 +16,7 @@ export default function Page(props) {
   }, [props])
   const len = data.length;
   const [user, setUser] = useState(data[len - 1].name);
-  const userName = session?.user.name;
+  
   useEffect(() => {
     if (user.name) {
       if (session && data.every((item) => item.name !== user.name )) {

@@ -54,8 +54,24 @@ function updateAPI(player) {
             });
     })
 }
+export default function deleteAPI(id){
+    return new Promise((resolve,reject)=>{
+           const url ='https://5ff2c99828c3980017b189ba.mockapi.io/localhost3001/item/dien-nuoc/'+id ;
+            fetch(url,{
+                method:'DELETE',
+           })
+            .then((response)=> response.json())
+            .then((res) =>{
+                resolve(res);
+            })
+            .catch((error)=> {
+                reject(error);
+            });
+        });
+    }
 export {
     callApiGetPagination,
     addAPIPagination,
-    updateAPI
+    updateAPI,
+    deleteAPI
 }
