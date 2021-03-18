@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'antd';
 
 import styles from "./type.module.css";
 import CheckBoxInput from './CheckBoxInput';
+import { callApiGetPagination, addAPIPagination, updateAPI } from './fetchAPI';
 function SpendingMonney() {
-
+    const [listData, setListData] = useState([])
     const [checkShowInput, setCheckShowInput] = useState(true)
-
-
-
-    const [listData, setListData] = useState([
-        {
-
-            nameRequest: "Đổ xăng",
-            money:12000,
-            disable: true
-
-        },
-        {
-
-            nameRequest: "Ăn trưa",
-            money: 5000,
-            disable: true
-        }
-    ])
     const [pushMore, setPushMore] = useState([
         {
-
             nameRequest: "",
             money: 0,
-            disable: false
+            disable: false,
+            used: false
         }
     ])
-    const pushOject = () => {
-        setListData([...listData, ...pushMore])
+    const   [newObject, setNewObject] = useState({})
+    useEffect(() => {
+        get()
+    }, []);
+    const get = (e) => {
+        callApiGetPagination(e)
+            .then(res => {
+                setListData(res.items)
+            })
+    }
+
+
+
+    const  pushOject  = () => {
+        addAPIPagination(...pushMore)
+            .then(res => {
+                setListData([...listData, ...pushMore])
+                console.log(res, "succeesss");
+            })
+            .catch((error) => {
+                reject(error)
+            })
+
     }
     const [value, setValue] = useState('')
     const onChange = e => {
@@ -43,23 +47,30 @@ function SpendingMonney() {
     const handle = e => {
         setDatas(e.target.value)
     }
-  
-    console.log(listData, "------------------------AAAAAAAAAAA");
+
+    const saveAll = async () => { await listData.map((item)  =>  { 
+        console.log(item,"--------------");
+        updateAPI(item)
+         
+    }) 
+// await get()
+}
     return (
         <div className={styles.container}
         // style={{ display: 'flex', flexDirection: 'column', marginTop: 30 }}
         >
+
             {listData.map((item, key) => {
-                let items = { ...item, id: key }
+
                 return (
                     <CheckBoxInput
-                        dataSucer={items}
+                        dataSucer={item}
                         key={key}
                         handleStateOrder={(dates) => {
                             let newArr = [...listData]
                             newArr[key] = { ...item, ...dates }
                             setListData(newArr)
-
+                            setNewObject({ ...item, ...dates })
                         }}
 
                         checkShowInput={checkShowInput}
@@ -71,7 +82,7 @@ function SpendingMonney() {
 
             )}
 
-
+            <Button onClick={saveAll} type="dashed" size="large">Save</Button>
             <Button onClick={pushOject} type="dashed" size="large">Push</Button>
         </div>
 

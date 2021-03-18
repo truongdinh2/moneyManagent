@@ -70,7 +70,6 @@ const PriceInput = ({ value = {}, onChange }) => {
 };
 
 const Tutol = ({ t, data }) => {
-    console.log( data,"@@@@@@@@@@@");
   const [session, loading] = useSession();
 //   let datas=[]
     const nameSession = session?.user.name;
