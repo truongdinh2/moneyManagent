@@ -6,38 +6,20 @@ import Tutol from '../components/tutol'
 export default function Page(props) {
   const [session, loading] = useSession();
   const [data, setData] = useState(props.data);
+  
   useEffect(() => {
     setData(props.data)
   }, [props])
   const len = data.length;
-  console.log(len)
   const [user, setUser] = useState(data[len - 1].name);
   const userName = session?.user.name;
   useEffect(() => {
     if (session) { setUser({ name: session.user.name, number: '20', }) }
     else { return; }
   }, [session, userName])
-  console.log(session, 'session')
-  if(user.name !== undefined){
-    console.log(data.every((item) => item.name !== user.name))
-  }
   useEffect(() => {
     if (user.name) {
       if (session && data.every((item) => item.name !== user.name )) {
-        console.log(session)
-        console.log(user.name)
-        console.log(data[data.length - 1].name)
-        // alert('hi')
-        // fetch("https://6050183ac20143001744e15e.mockapi.io/money", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify(session.user.name, 13),
-        // }).then(() => {
-        //   console.log(session)
-        //   alert('hi')
-        // }).catch(err => console.log(err))
         fetch('https://6050183ac20143001744e15e.mockapi.io/money', {
           method: 'POST', // or 'PUT'
           headers: {
@@ -57,7 +39,7 @@ export default function Page(props) {
       }
     }
   }, [session?.user.name, user.name]);
-  console.log(data)
+  console.log(data,'data da update ?')
   return (
     <Layout>
       <h1>
@@ -73,6 +55,9 @@ export default function Page(props) {
         </h3></li>
         <li><h3>
           danh sách chi tiêu
+        </h3></li>
+        <li><h3>
+          Hàm tính tổng tiền
         </h3></li>
         <li><h3>
           dự định sử dụng tiền với mục đích gì
