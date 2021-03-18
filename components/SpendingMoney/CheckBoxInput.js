@@ -46,12 +46,9 @@ const CheckBoxInput = props => {
     const onCheck = async () => {
         try {
             const values = await form.validateFields();
-            console.log('Success:', values);
         } catch (errorInfo) {
-            console.log('Failed:', errorInfo);
         }
     };
-    console.log(nickName);
     const handleChangeType = (e) => {
         handleStateOrder({ nameRequest: e.target.value })
     }

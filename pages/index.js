@@ -5,61 +5,48 @@ import Layout from '../components/layout'
 import Tutol from '../components/tutol'
 export default function Page(props) {
   const [session, loading] = useSession();
-  const [data,setData] = useState(props.data);
-  useEffect(()=>{
-    setData(props.data)
-  },[props])
-  const len = data.length;
-  console.log(len)
-  const [user, setUser] = useState(data[len - 1].name);
-  const userName = session?.user.name;
+  const [data, setData] = useState(props.data);
   useEffect(() => {
     if (session) { setUser({ name: session.user.name, number: '20', }) }
     else { return; }
   }, [session, userName])
-  console.log(session, 'session')
-  console.log(user, 'user',user?.name)
   useEffect(() => {
-    if (session && user?.name !== data[data.length -1].name) {
-      console.log(session)
-      console.log(user.name)
-      console.log(data[data.length -1].name)
-      // alert('hi')
-      // fetch("https://6050183ac20143001744e15e.mockapi.io/money", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(session.user.name, 13),
-      // }).then(() => {
-      //   console.log(session)
-      //   alert('hi')
-      // }).catch(err => console.log(err))
-      fetch('https://6050183ac20143001744e15e.mockapi.io/money', {
-        method: 'POST', // or 'PUT'
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      })
-        .then(response => response.json())
-        .then(user => {
-          console.log('Success:', user);
+    setData(props.data)
+  }, [props])
+  const len = data.length;
+  const [user, setUser] = useState(data[len - 1].name);
+  const userName = session?.user.name;
+  useEffect(() => {
+    if (user.name) {
+      if (session && data.every((item) => item.name !== user.name )) {
+        fetch('https://6050183ac20143001744e15e.mockapi.io/money', {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(user),
         })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+          .then(response => response.json())
+          .then(user => {
+            console.log('Success:', user);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      } else {
+        console.log('ko chay')
+      }
     }
-  }, [session?.user.name,user.name]);
-  console.log(Number(data[len-1].number),"sssssss")
+  }, [session?.user.name, user.name]);
+  console.log(data,'data da update ?')
   return (
     <Layout>
       <h1>
         Quản lý tiền
       </h1>
-      <Tutol data = {data}/>
+      <Tutol data={data} />
       <div>
-        {JSON.stringify(data,null,3)}
+        {JSON.stringify(data, null, 3)}
       </div>
       <ul>
         <li><h3>
@@ -67,6 +54,9 @@ export default function Page(props) {
         </h3></li>
         <li><h3>
           danh sách chi tiêu
+        </h3></li>
+        <li><h3>
+          Hàm tính tổng tiền
         </h3></li>
         <li><h3>
           dự định sử dụng tiền với mục đích gì
