@@ -4,23 +4,23 @@ import { withNamespaces } from 'react-i18next';
 import i18n from '../src/i18n';
 import SpendingMonney from './SpendingMoney/SpendingMonney';
 function Layout({ children, t }) {
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  }
-  return (
-    <>
-      <Header />
-        <button onClick={() => changeLanguage('vi')}>vi</button>
-        <button onClick={() => changeLanguage('en')}>en</button>
-        <h1>{t('Welcome to React')}</h1>
-        <h1>{t('t')}</h1>
-        
-        <SpendingMonney/>
-        <main>
-          {children}
-        </main>
-      <Footer />
-    </>
-  )
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    }
+    return (
+        <>
+            <Header />
+            <button onClick={() => changeLanguage('vi')}>vi</button>
+            <button onClick={() => changeLanguage('en')}>en</button>
+            <h1>{t('Welcome to React')}</h1>
+            <h1>{t('t')}</h1>
+
+            {/* <SpendingMonney/> */}
+            <main>
+                {children}
+            </main>
+            <Footer />
+        </>
+    )
 }
 export default withNamespaces()(Layout);
